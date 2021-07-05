@@ -1,0 +1,4 @@
+ {% load bootstraps3 %}
+
+       {% bootstrap_css %}
+      {% bootstrap_javascript %}
