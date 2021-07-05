@@ -2,6 +2,10 @@ from django.test import TestCase
 from sign.models import Event,Guest
 
 # Create your tests here.
+#python manage.py test
+#python manage.py test sign
+#python manage.py test sign.tests
+#python manage.py test sign.tests.ModuleTest
 class  ModelTest(TestCase):
     def setUp(self):
         Event.objects.create(id=1,name="oneplus 3 event",status=True,limit=200,
@@ -20,3 +24,10 @@ class  ModelTest(TestCase):
         result=Guest.objects.get(phone='18511852667')
         self.assertEqual(result.realname,'kara')
         self.assertFalse(result.sign)
+
+class IndexPageTest(TestCase):
+    '测试登录首页'
+    def test_index_page_render_index_template(self):
+        responese=self.client.get('/index/')
+        self.assertEqual(responese.status_code,200)
+        self.assertTemplateUsed(responese,'index.html')
