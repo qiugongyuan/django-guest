@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 #发布会表
-class Event(models.Model):
+class Event_new(models.Model):
     name=models.CharField(max_length=100)     #发布会标题
     limit=models.IntegerField()               #参加人数
     status=models.BooleanField()              #状态
@@ -15,8 +15,8 @@ class Event(models.Model):
 
 #嘉宾表
 
-class Guest(models.Model):
-    event=models.ForeignKey(Event,on_delete=models.DO_NOTHING) #关联发布会id
+class Guest_new(models.Model):
+    event=models.ForeignKey(Event_new,on_delete=models.DO_NOTHING) #关联发布会id
     realname=models.CharField(max_length=64) #姓名1   ``1 
     phone=models.CharField(max_length=16) #手机号
     Email=models.EmailField()  #邮箱

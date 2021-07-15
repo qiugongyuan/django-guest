@@ -9,8 +9,8 @@ from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from sign.models import Event
-from sign.models import Guest
+from sign.models import Event_new
+from sign.models import Guest_new
 from django.shortcuts import get_object_or_404
 def index(request):
     return render(request,"index.html")
@@ -36,7 +36,7 @@ def login_action(request):
 @login_required()
 def event_manage(request):
     # username=request.COOKIES.get('user','')#读取浏览器cookie
-    event_list=Event.objects.all()
+    event_list=Event_new.objects.all()
     username=request.session.get('user','')#读取浏览器session
     return render(request,'event_manage.html',{"user":username,"events":event_list})
 #发布会名称搜索
@@ -44,13 +44,13 @@ def event_manage(request):
 def search_name(request):
     username=request.session.get('user','')
     search_name=request.GET.get("name",'')
-    event_list=Event.objects.filter(name__contains =search_name)
+    event_list=Event_new.objects.filter(name__contains =search_name)
     return render(request,'event_manage.html',{"user":username,"events":event_list})
 
 #嘉宾管理
 @login_required()
 def guest_manage(request):
-    guest_list=Guest.objects.all()
+    guest_list=Guest_new.objects.all()
     username=request.session.get('user','')#读取浏览器session
     return render(request,'guest_manage.html',{"user":username,"guests":guest_list})
 #嘉宾手机搜索
@@ -58,7 +58,7 @@ def guest_manage(request):
 def search_phone(request):
     username=request.session.get('user','')
     search_phone=request.GET.get("phone",'')
-    guest_list=Guest.objects.filter(phone__contains =search_phone)
+    guest_list=Guest_new.objects.filter(phone__contains =search_phone)
     return render(request,'guest_manage.html',{"user":username,"guests":guest_list})
 
 #退出登录
@@ -70,29 +70,29 @@ def logout(request):
 #签到页面
 @login_required()
 def sign_index(request,event_id):
-    event_name=get_object_or_404(Event,id=event_id)
+    event_name=get_object_or_404(Event_new,id=event_id)
     # print("event_name:%s" % (dir(event_name)))
     # print("event_name:%s" % (event_name.name))
     return render(request,'sign_index.html',{'eventID':event_id,'eventName':event_name.name})
 #签到动作
 @login_required()
 def sign_index_action(request,event_id):
-    event=get_object_or_404(Event,id=event_id)
-    guest_list = Guest.objects.filter(event_id=event_id)
+    event=get_object_or_404(Event_new,id=event_id)
+    guest_list = Guest_new.objects.filter(event_id=event_id)
 
     phone=request.POST.get('phone','')
     print(phone)
 
-    result = Guest.objects.filter(phone=phone)
+    result = Guest_new.objects.filter(phone=phone)
     if not result:
         return render(request, 'sign_index.html', {'eventID': event_id, 'hint': 'phone error'})
 
-    result = Guest.objects.filter(phone=phone, event_id=event_id)
+    result = Guest_new.objects.filter(phone=phone, event_id=event_id)
     if not result:
         return render(request, 'sign_index.html', {'eventID': event_id, 'hint': 'phone or event id error'})
 
 
-    result = Guest.objects.filter(phone=phone, event_id=event_id)
+    result = Guest_new.objects.filter(phone=phone, event_id=event_id)
     print(result.values())
     print(list(result.values()))
     print(list(result.values())[0]['sign'])
@@ -100,7 +100,7 @@ def sign_index_action(request,event_id):
     if result['sign']:
          return render(request, 'sign_index.html', {'eventID': event_id, 'hint': 'user has sign in'})
     else:
-        Guest.objects.filter(phone=phone, event_id=event_id).update(sign='1')
+        Guest_new.objects.filter(phone=phone, event_id=event_id).update(sign='1')
     return render(request, 'sign_index.html', {'eventID': event_id, 'hint': 'sign in success', 'guest': result})
 
 

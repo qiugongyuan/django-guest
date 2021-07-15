@@ -33,7 +33,7 @@ STATICFILES_DIRS = [
 
 
 # Application definition
-
+#APPEND_SLASH=False
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -89,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'HOST':'127.0.0.1',
         'PORT':'3306',
-        'NAME': 'guest',
+        'NAME': 'guest_test',
         'USER':'root',
         'PASSWORD':'1234',
         'OPTIONS':{

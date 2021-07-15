@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from sign import views_if
+from sign import views_if_sec
 
 urlpatterns={
     #sign system interface:
@@ -17,5 +18,10 @@ urlpatterns={
     #
     # ex:/api/user_sign/
      url(r'^user_sign/', views_if.user_sign, name='user_sign'),
+    #ex:/api/sec_get_event_list/
+    url(r'^get_sec_event_list/',views_if_sec.get_sec_event_list,name='get_sec_event_list'),
+
+    # ex:/api/add_sec_event/
+    url(r'^add_sec_event/', views_if_sec.add_sec_event, name='add_sec_event')
 
 }
